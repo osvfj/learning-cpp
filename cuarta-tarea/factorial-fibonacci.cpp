@@ -5,6 +5,11 @@ using namespace std;
 int main() {
   int opcion = 0;
 
+  /*
+    Agregamos directamente el valor de la condición en "true", así se mantendrá
+    ejecutando el programa "infinitamente" hasta que el usuario intervenga y
+    decida salir.
+  */
   while (true) {
     cout << "\nMenú de Opciones:" << endl;
     cout << "1. Calcular factorial" << endl;
@@ -13,6 +18,7 @@ int main() {
     cout << "Elija una opción: ";
     cin >> opcion;
 
+    // Evaluamos cada caso en base a la selección del usuario
     switch (opcion) {
       case 1: {
         int numero;
