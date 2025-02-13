@@ -19,13 +19,16 @@ int main() {
     cout << "¿Desea continuar? (S/n) ";
     cin >> continuar;
 
-    if (continuar == 's') {
-      seguir = true;
-      break;
-    } else if (continuar == 'n') {
-      exit(0);
+    switch (continuar) {
+      case 's':
+        seguir = true;
+        break;
+      case 'n':
+        exit(0);
+      default:
+        continue;
+        break;
     }
-
   } while (!seguir);
 
   cout << "Continue...";
