@@ -72,14 +72,15 @@ int main() {
           std::cout << std::endl << "Digite retiro: ";
           std::cin >> retiro;
           if (retiro > balanceFinal) {
-            std::cout << "No cuenta con los fondos necesarios para retirar esa "
-                         "cantidad \n";
+            std::cout << "No cuenta con los fondos necesarios para retirar $"
+                      << retiro << std::endl;
           } else {
             balanceFinal -= retiro;
             balanceTotalRetirado += retiro;
             break;
           }
         }
+        break;
       default:
         std::cout << std::endl
                   << "Opción inválida. Por favor, intente nuevamente."
