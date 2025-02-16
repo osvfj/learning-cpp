@@ -8,6 +8,7 @@ int main() {
   float cantidadTotal = 0.00;
   float deposito = 0.00;
   float retiro = 0.00;
+  float apertura = 0.00;
 
   bool seguir = false;
   int opt;
@@ -16,7 +17,7 @@ int main() {
   getline(cin, dueño);
 
   cout << "Digite monto de apertura: ";
-  cin >> cantidadTotal;
+  cin >> apertura;
 
   while (true) {
     do {
