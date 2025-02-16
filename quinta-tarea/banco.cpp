@@ -76,8 +76,11 @@ int main() {
           }
         }
       default:
-        break;
+        std::cout << std::endl
+                  << "Opción inválida. Por favor, intente nuevamente."
+                  << std::endl;
     }
+    std::cout << "---------------------" << std::endl;
   }
 
   return 0;
