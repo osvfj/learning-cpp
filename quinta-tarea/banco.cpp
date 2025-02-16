@@ -2,24 +2,26 @@
 #include <string>
 
 int main() {
-  std::string dueño = "";
-  float deposito = 0.00;
-  float retiro = 0.00;
-  float apertura = 0.00;
-  float totalDeposito = 0.00;
-  float totalRetiro = 0.00;
-  float cantidadTotal = 0.00;
+  std::string cliente = "";
+  float balanceDeApertura = 0.00;
+  float deposito = 0.0f;
+  float retiro = 0.0f;
+
+  // Totales en base la acción
+  float balanceTotalDepositado = 0.00;
+  float balanceTotalRetirado = 0.00;
+  float balanceFinal = 0.00;
 
   bool seguir = false;
-  int opt;
+  int tipoDeTransaccion;
 
   std::cout << "Digite su nombre: ";
-  std::getline(std::cin, dueño);
+  std::getline(std::cin, cliente);
 
   std::cout << "Digite monto de apertura: ";
-  std::cin >> apertura;
+  std::cin >> balanceDeApertura;
 
-  cantidadTotal += apertura;
+  balanceFinal = balanceDeApertura;
 
   while (true) {
     do {
@@ -33,10 +35,11 @@ int main() {
           seguir = true;
           break;
         case 2:
-          std::cout << "\n Cliente: " << dueño << "\n\n Apertura: " << apertura
-                    << "\n Total Depositado: " << totalDeposito
-                    << "\n Total Retirado: " << totalRetiro
-                    << "\n Balance Final: " << cantidadTotal << std::endl;
+          std::cout << "\n Cliente: " << cliente
+                    << "\n\n balanceDeApertura: " << balanceDeApertura
+                    << "\n Total Depositado: " << balanceTotalDepositado
+                    << "\n Total Retirado: " << balanceTotalRetirado
+                    << "\n Balance Final: " << balanceFinal << std::endl;
 
           exit(0);
         default:
@@ -48,27 +51,27 @@ int main() {
     std::cout << "¿Tansacción? \n";
     std::cout << "1. Depósito\n2. Retiro\n";
     std::cout << "Opción: ";
-    std::cin >> opt;
+    std::cin >> tipoDeTransaccion;
     std::cout << "---------------------";
 
-    switch (opt) {
+    switch (tipoDeTransaccion) {
       case 1:
         std::cout << std::endl << "Digite depósito: ";
         std::cin >> deposito;
 
-        cantidadTotal += deposito;
-        totalDeposito += deposito;
+        balanceFinal += deposito;
+        balanceTotalDepositado += deposito;
         break;
       case 2:
         while (true) {
           std::cout << std::endl << "Digite retiro: ";
           std::cin >> retiro;
-          if (retiro > cantidadTotal) {
+          if (retiro > balanceFinal) {
             std::cout << "No cuenta con los fondos necesarios para retirar esa "
                          "cantidad \n";
           } else {
-            cantidadTotal -= retiro;
-            totalRetiro += retiro;
+            balanceFinal -= retiro;
+            balanceTotalRetirado += retiro;
             break;
           }
         }
