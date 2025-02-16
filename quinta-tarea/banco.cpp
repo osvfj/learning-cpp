@@ -28,12 +28,18 @@ int main() {
       int continuar;
       cout << "¿Desea continuar? (1. Si/2. No) ";
       cin >> continuar;
+      cout << "---------------------" << endl;
 
       switch (continuar) {
         case 1:
           seguir = true;
           break;
         case 2:
+          cout << "\n Cliente: " << dueño << "\n\n Apertura: " << apertura
+               << "\n Total Depositado: " << totalDeposito
+               << "\n Total Retirado: " << totalRetiro
+               << "\n Balance Final: " << cantidadTotal << endl;
+
           exit(0);
         default:
           continue;
@@ -45,10 +51,11 @@ int main() {
     cout << "1. Depósito\n2. Retiro\n";
     cout << "Opción: ";
     cin >> opt;
+    cout << "---------------------";
 
     switch (opt) {
       case 1:
-        cout << "Digite depósito: ";
+        cout << endl << "Digite depósito: ";
         cin >> deposito;
 
         cantidadTotal += deposito;
@@ -56,7 +63,7 @@ int main() {
         break;
       case 2:
         while (true) {
-          cout << "Digite retiro: ";
+          cout << endl << "Digite retiro: ";
           cin >> retiro;
           if (retiro > cantidadTotal) {
             cout << "No cuenta con los fondos necesarios para retirar esa "
