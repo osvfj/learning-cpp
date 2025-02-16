@@ -19,15 +19,15 @@ int main() {
   cin >> cantidadTotal;
 
   do {
-    char continuar;
-    cout << "¿Desea continuar? (S/n) ";
+    int continuar;
+    cout << "¿Desea continuar? (1. Si/2. No) ";
     cin >> continuar;
 
     switch (continuar) {
-      case 's':
+      case 1:
         seguir = true;
         break;
-      case 'n':
+      case 2:
         exit(0);
       default:
         continue;
