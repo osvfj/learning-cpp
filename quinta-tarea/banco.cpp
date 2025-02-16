@@ -5,10 +5,12 @@ using namespace std;
 
 int main() {
   string dueño = "";
-  float cantidadTotal = 0.00;
   float deposito = 0.00;
   float retiro = 0.00;
   float apertura = 0.00;
+  float totalDeposito = 0.00;
+  float totalRetiro = 0.00;
+  float cantidadTotal = 0.00;
 
   bool seguir = false;
   int opt;
@@ -18,6 +20,8 @@ int main() {
 
   cout << "Digite monto de apertura: ";
   cin >> apertura;
+
+  cantidadTotal += apertura;
 
   while (true) {
     do {
@@ -48,8 +52,7 @@ int main() {
         cin >> deposito;
 
         cantidadTotal += deposito;
-
-        cout << cantidadTotal << endl;
+        totalDeposito += deposito;
         break;
       case 2:
         while (true) {
@@ -60,6 +63,7 @@ int main() {
                     "cantidad \n";
           } else {
             cantidadTotal -= retiro;
+            totalRetiro += retiro;
             break;
           }
         }
