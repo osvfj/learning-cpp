@@ -15,28 +15,33 @@ int main() {
   bool seguir = false;
   int tipoDeTransaccion;
 
+  std::cout << "\n-----------------------------------------------" << std::endl;
+  std::cout << "             Bienvenido al Banco            " << std::endl;
+  std::cout << "-----------------------------------------------" << std::endl;
+
   std::cout << "Digite su nombre: ";
   std::getline(std::cin, cliente);
 
   std::cout << "Digite monto de apertura: ";
   std::cin >> balanceDeApertura;
+  std::cout << "---------------------" << std::endl;
 
   balanceFinal = balanceDeApertura;
 
   while (true) {
     do {
-      int continuar;
+      int continuarOperando;
       std::cout << "¿Desea continuar? (1. Si/2. No) ";
-      std::cin >> continuar;
+      std::cin >> continuarOperando;
       std::cout << "---------------------" << std::endl;
 
-      switch (continuar) {
+      switch (continuarOperando) {
         case 1:
           seguir = true;
           break;
         case 2:
           std::cout << "\n Cliente: " << cliente
-                    << "\n\n balanceDeApertura: " << balanceDeApertura
+                    << "\n\n Monto de Apertura: " << balanceDeApertura
                     << "\n Total Depositado: " << balanceTotalDepositado
                     << "\n Total Retirado: " << balanceTotalRetirado
                     << "\n Balance Final: " << balanceFinal << std::endl;
@@ -48,7 +53,7 @@ int main() {
       }
     } while (!seguir);
 
-    std::cout << "¿Tansacción? \n";
+    std::cout << "Tipo de transacción \n";
     std::cout << "1. Depósito\n2. Retiro\n";
     std::cout << "Opción: ";
     std::cin >> tipoDeTransaccion;
