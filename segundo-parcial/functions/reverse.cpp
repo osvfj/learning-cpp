@@ -12,12 +12,12 @@ int longitud(string text){
 	return i;
 }
 
-int invertir(string text){
-	for(int i=0; i <= longitud(text); i--){
-	 for (int j=0; i <= longitud(text); i++){
-	 	
-	 }
+string invertir(string text){
+	string invertido = "";
+	for(int i=longitud(text); i >= 0; i--){
+		invertido += text[i];
 	}
+	return invertido;
 }
 
 int main(){
@@ -25,10 +25,5 @@ int main(){
 	cout << "Ingresa una cadena de texto: ";
 	cin >> texto;
 
-
-
-	cout << longitud(texto);
-
- //string reverseText = invertirTexto(texto);
-
+	cout << invertir(texto);
 }
