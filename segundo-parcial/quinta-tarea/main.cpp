@@ -9,7 +9,34 @@ struct Empleado {
     int id;
     string nombre;
     int horas_trabajadas;
-    int precio_por_hora;
+    float precio_por_hora;
+    float sueldo_bruto;
+    float seguro_medico;
+    float cooperativa;
+    float total_descuento;
+    float sueldo_neto;
+
+    void calcularSalario() {
+        sueldo_bruto = horas_trabajadas * precio_por_hora;
+    }
+
+    void calcularSeguroMedico(){
+        seguro_medico = sueldo_bruto * 0.012;
+    }
+
+    void calcularCooperativa(){
+        cooperativa = sueldo_bruto * 0.05;
+    }
+
+    void calcularTotalDescuento(){
+        total_descuento = seguro_medico + cooperativa;
+    }
+
+    void calcularSueldoNeto(){
+        sueldo_neto = sueldo_bruto - total_descuento;
+    }
+
+
 }empleados[NUMERO_DE_EMPLEADOS];
 
 
