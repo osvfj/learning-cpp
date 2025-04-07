@@ -39,6 +39,7 @@ struct Empleado {
 
 }empleados[NUMERO_DE_EMPLEADOS];
 
+Empleado empleadosOrdenados[NUMERO_DE_EMPLEADOS];
 
 void agregarEmpleado(){
     for(int i = 0; i < NUMERO_DE_EMPLEADOS; i++){
@@ -62,23 +63,56 @@ void agregarEmpleado(){
     }
 }
 
-void mostrarEmpleados() {
-    cout << "ID\tNombre\tHoras\tPrecio/Hora\tSueldo Bruto\tSeguro Médico\tCooperativa\tTotal Descuento\tSueldo Neto" << endl;
-    cout << "---\t------\t-----\t-----------\t------------\t-------------\t-----------\t---------------\t------------" << endl;
+void mostrarEmpleado(Empleado empleado) {
+    if (empleado.id) {
+        empleado.calcularSalario();
+        empleado.calcularSeguroMedico();
+        empleado.calcularCooperativa();
+        empleado.calcularTotalDescuento();
+        empleado.calcularSueldoNeto();
 
-    for (int i = 0; i < NUMERO_DE_EMPLEADOS; i++) {
-        if (empleados[i].id) {
-            empleados[i].calcularSalario();
-            empleados[i].calcularSeguroMedico();
-            empleados[i].calcularCooperativa();
-            empleados[i].calcularTotalDescuento();
-            empleados[i].calcularSueldoNeto();
-
-            cout << empleados[i].id << "\t" << empleados[i].nombre << "\t" << empleados[i].horas_trabajadas << "\t" << empleados[i].precio_por_hora << "\t\t" << empleados[i].sueldo_bruto << "\t\t" << empleados[i].seguro_medico << "\t\t" << empleados[i].cooperativa << "\t\t" << empleados[i].total_descuento << "\t\t" << empleados[i].sueldo_neto << endl;
-        }
+        cout << empleado.id << "\t" << empleado.nombre << "\t" << empleado.horas_trabajadas << "\t" << empleado.precio_por_hora << "\t\t" << empleado.sueldo_bruto << "\t\t" << empleado.seguro_medico << "\t\t" << empleado.cooperativa << "\t\t" << empleado.total_descuento << "\t\t" << empleado.sueldo_neto << endl;
     }
 }
 
+
+void ordernarEmpleadoMenorPresio(){
+    for (int i = 0; i < NUMERO_DE_EMPLEADOS; i++) {
+        empleadosOrdenados[i] = empleados[i];
+    }
+
+
+   for(int i = 0; i < NUMERO_DE_EMPLEADOS - 1; i++){
+       for (int j = 0; j < NUMERO_DE_EMPLEADOS - i - 1; j++) {
+              if (empleadosOrdenados[j].precio_por_hora > empleadosOrdenados[j + 1].precio_por_hora) {
+                Empleado temp = empleadosOrdenados[j];
+                empleadosOrdenados[j] = empleadosOrdenados[j + 1];
+                empleadosOrdenados[j + 1] = temp;
+            }
+       }
+   }
+
+}
+
+
+void mostrarDatosEmpleados(){
+    cout << "ID\tNombre\tHoras\tPrecio/Hora\tSueldo Bruto\tSeguro Médico\tCooperativa\tTotal Descuento\tSueldo Neto" << endl;
+    cout << "---\t------\t-----\t-----------\t------------\t-------------\t-----------\t---------------\t------------" << endl;
+
+    for(int i = 0; i <= NUMERO_DE_EMPLEADOS; i++){
+        mostrarEmpleado(empleados[i]);
+    }
+}
+
+void mostrarEmpleadosMenorMayor(){
+    ordernarEmpleadoMenorPresio();
+    cout << "ID\tNombre\tHoras\tPrecio/Hora\tSueldo Bruto\tSeguro Médico\tCooperativa\tTotal Descuento\tSueldo Neto" << endl;
+    cout << "---\t------\t-----\t-----------\t------------\t-------------\t-----------\t---------------\t------------" << endl;
+
+    for(int i = 0; i <= NUMERO_DE_EMPLEADOS; i++){
+        mostrarEmpleado(empleadosOrdenados[i]);
+    }
+}
 
 
 int main(){
@@ -101,7 +135,11 @@ int main(){
                 agregarEmpleado();
                 break;
             case 2:
-                mostrarEmpleados();
+                mostrarDatosEmpleados();
+                break;
+            case 3:
+                mostrarEmpleadosMenorMayor();
+                break;
         }
     }
 
