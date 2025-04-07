@@ -1,29 +1,36 @@
 #include <iostream>
-#include <string>
 
 using namespace std;
 
-
-int longitud(string text){
-	int i;
-	while(text[i] != '\0'){
-		i++;
-	}
-	return i;
+int longitud(char* text) {
+    char* ptr = text;
+    while (*ptr != '\0') {
+        ptr++;
+    }
+    return ptr - text;
 }
 
-string invertir(string text){
-	string invertido = "";
-	for(int i=longitud(text); i >= 0; i--){
-		invertido += text[i];
+void invertir(char* text){
+
+	char* inicio = text;
+	char* fin = text + longitud(text) - 1;
+
+	while(inicio < fin){
+		char temp = *inicio;
+		*inicio = *fin;
+		*fin = temp;
+
+		inicio++;
+		fin--;
 	}
-	return invertido;
 }
 
 int main(){
-	string texto;
+	char texto[100];
 	cout << "Ingresa una cadena de texto: ";
 	cin >> texto;
 
-	cout << invertir(texto);
+	
+	 invertir(texto);
+
 }
