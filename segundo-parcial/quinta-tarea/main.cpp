@@ -41,6 +41,60 @@ struct Empleado {
 
 Empleado empleadosOrdenados[NUMERO_DE_EMPLEADOS];
 
+
+void agregarEmpleado();
+void mostrarEmpleado(Empleado empleado);
+void ordernarEmpleadoMenorPresio();
+void mostrarDatosEmpleados();
+void mostrarEmpleadosMenorMayor();
+
+
+int main(){
+
+    while(true){
+        int opt;
+        cout << "-------------------------------------------------";
+        cout << "\n1. Agregar empleado\n";
+        cout << "2. Mostrar datos de los empleados\n";
+        cout << "3. Mostrar datos de los empleados con menor precio por hora\n";
+        cout << "4. Salir\n";
+        cout << "-------------------------------------------------\n";
+        cout << "Opt: ";
+        cin >> opt;
+
+
+
+        switch (opt){
+            case 1:
+                agregarEmpleado();
+                break;
+            case 2:
+                if(!empleados[0].id){
+                    cout << "No hay empleados que mostrar...\n";
+                    break;
+                }
+
+                mostrarDatosEmpleados();
+                break;
+            case 3:
+                if(!empleados[0].id){
+                    cout << "No hay empleados que mostrar...\n";
+                    break;
+                }
+                mostrarEmpleadosMenorMayor();
+                break;
+            case 4:
+                return 0;
+        }
+    }
+
+    return 0;
+}
+
+
+
+
+
 void agregarEmpleado(){
     for(int i = 0; i < NUMERO_DE_EMPLEADOS; i++){
         if(!empleados[i].id){
@@ -112,47 +166,4 @@ void mostrarEmpleadosMenorMayor(){
     for(int i = 0; i <= NUMERO_DE_EMPLEADOS; i++){
         mostrarEmpleado(empleadosOrdenados[i]);
     }
-}
-
-
-int main(){
-
-    while(true){
-        int opt;
-        cout << "-------------------------------------------------";
-        cout << "\n1. Agregar empleado\n";
-        cout << "2. Mostrar datos de los empleados\n";
-        cout << "3. Mostrar datos de los empleados con menor precio por hora\n";
-        cout << "4. Salir\n";
-        cout << "-------------------------------------------------\n";
-        cout << "Opt: ";
-        cin >> opt;
-
-
-
-        switch (opt){
-            case 1:
-                agregarEmpleado();
-                break;
-            case 2:
-                if(!empleados[0].id){
-                    cout << "No hay empleados que mostrar...\n";
-                    break;
-                }
-
-                mostrarDatosEmpleados();
-                break;
-            case 3:
-                if(!empleados[0].id){
-                    cout << "No hay empleados que mostrar...\n";
-                    break;
-                }
-                mostrarEmpleadosMenorMayor();
-                break;
-            case 4:
-                return 0;
-        }
-    }
-
-    return 0;
 }
