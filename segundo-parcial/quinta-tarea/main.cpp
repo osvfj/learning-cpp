@@ -54,7 +54,7 @@ int main(){
     while(true){
         int opt;
         cout << "-------------------------------------------------";
-        cout << "\n1. Agregar empleado\n";
+        cout << "\n1. Agregar empleados\n";
         cout << "2. Mostrar datos de los empleados\n";
         cout << "3. Mostrar datos de los empleados con menor precio por hora\n";
         cout << "4. Salir\n";
@@ -99,20 +99,19 @@ void agregarEmpleado(){
     for(int i = 0; i < NUMERO_DE_EMPLEADOS; i++){
         if(!empleados[i].id){
             empleados[i].id = i + 1;
-            cout << "Nombre del empleado: ";
+            cout << "Nombre del empleado #" <<  i + 1 << ": ";
             cin >> empleados[i].nombre;      
 
             do {
-                cout << "Horas trabajadas: ";
+                cout << "Horas trabajadas #" <<  i + 1 << ": ";
                 cin >> empleados[i].horas_trabajadas;
             } while (empleados[i].horas_trabajadas <= 0);
 
             
             do {
-                cout << "Precio de la hora: ";
+                cout << "Precio de la hora  #" <<  i + 1 << ": ";
                 cin >> empleados[i].precio_por_hora;
             } while (empleados[i].precio_por_hora <= 0);
-            break;
         }
     }
 }
