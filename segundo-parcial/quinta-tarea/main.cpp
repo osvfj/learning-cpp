@@ -45,11 +45,18 @@ void agregarEmpleado(){
         if(!empleados[i].id){
             empleados[i].id = i;
             cout << "Nombre del empleado: ";
-            cin >> empleados[i].nombre;
-            cout << "Horas trabajadas: ";
-            cin >> empleados[i].horas_trabajadas;
-            cout << "Precio de la hora: ";
-            cin >> empleados[i].precio_por_hora;
+            cin >> empleados[i].nombre;      
+
+            do {
+                cout << "Horas trabajadas: ";
+                cin >> empleados[i].horas_trabajadas;
+            } while (empleados[i].horas_trabajadas <= 0);
+
+            
+            do {
+                cout << "Precio de la hora: ";
+                cin >> empleados[i].precio_por_hora;
+            } while (empleados[i].precio_por_hora <= 0);
             break;
         }
     }
