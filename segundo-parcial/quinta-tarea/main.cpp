@@ -135,11 +135,22 @@ int main(){
                 agregarEmpleado();
                 break;
             case 2:
+                if(!empleados[0].id){
+                    cout << "No hay empleados que mostrar...\n";
+                    break;
+                }
+
                 mostrarDatosEmpleados();
                 break;
             case 3:
+                if(!empleados[0].id){
+                    cout << "No hay empleados que mostrar...\n";
+                    break;
+                }
                 mostrarEmpleadosMenorMayor();
                 break;
+            case 4:
+                return 0;
         }
     }
 
