@@ -100,7 +100,8 @@ void agregarEmpleado(){
         if(!empleados[i].id){
             empleados[i].id = i + 1;
             cout << "Nombre del empleado #" <<  i + 1 << ": ";
-            cin >> empleados[i].nombre;      
+            cin.ignore();
+            getline(cin, empleados[i].nombre);
 
             do {
                 cout << "Horas trabajadas #" <<  i + 1 << ": ";
