@@ -63,6 +63,7 @@ void agregarEmpleado(ofstream* archivo, ifstream* db){
     } while (empleado.precio_por_hora <= 0);
 
     archivo->close();
+    db->close();
 }
 
 
@@ -199,6 +200,7 @@ void agregarDepartamento(ofstream* archivo, ifstream* db) {
     *archivo << departamento.sucursalDepartamento << "\n";
 
     archivo->close();
+    db->close();
 }
 
 
