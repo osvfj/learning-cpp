@@ -32,7 +32,7 @@ void agregarEmpleado(ofstream* archivo, ifstream* db){
 
     int id;
 
-    while (*db >> empleado.id_empleado){
+    if (*db >> empleado.id_empleado){
         do {
             cout << "Ingresa el id del empleado: ";
             cin >> id;
@@ -40,6 +40,9 @@ void agregarEmpleado(ofstream* archivo, ifstream* db){
                 cout << "Ya existe un usuario con este ID\n";
             }
         } while(id == empleado.id_empleado);
+    } else {
+        cout << "Ingresa el id del empleado: ";
+        cin >> id;
     }
 
     empleado.id_empleado = id;
@@ -178,7 +181,7 @@ void agregarDepartamento(ofstream* archivo, ifstream* db) {
 
     int id;
     
-    while (*db >> departamento.id_departamento) {
+   if (*db >> departamento.id_departamento) {
         do {
             cout << "Ingresa el id del departamento: ";
             cin >> id;
@@ -186,6 +189,9 @@ void agregarDepartamento(ofstream* archivo, ifstream* db) {
                 cout << "Ya existe un departamento con este ID\n";
             }
         } while (id == departamento.id_departamento);
+    } else {
+        cout << "Ingresa el id del departamento: ";
+        cin >> id;
     }
 
     departamento.id_departamento = id;
