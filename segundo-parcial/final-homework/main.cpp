@@ -40,12 +40,28 @@ void agregarEmpleado(ofstream* archivo){
     } while (empleado.precio_por_hora <= 0);
 
     archivo->close();
-
 }
 
 
+void agregarDepartamento(ofstream* archivo){
+    cout << "Ingresa el id del departamento: ";
+    cin >> departamento.id_departamento;
+    *archivo << departamento.id_departamento << "\t";
+
+    cout << "Nombre del departamento: ";
+    cin >> departamento.nombreDepartamento;
+    *archivo << departamento.nombreDepartamento << "\t";
+    
+    cout << "Sucursal del departamento: ";
+    cin >> departamento.sucursalDepartamento;
+    *archivo << departamento.sucursalDepartamento << "\n";
+
+    archivo->close();
+}
+
 int main(){
     ofstream empleados;
+    ofstream departamentos;
 
     while(true){
             system("clear");
@@ -70,7 +86,15 @@ int main(){
                         exit(1);
                     }
                     agregarEmpleado(&empleados);
-                break;
+                    break;
+                case 2:
+                    departamentos.open("departamentos.txt", ios::app);
+                    if(departamentos.fail()){
+                        cout << "Error abriendo el archivo";
+                        exit(1);
+                    }
+                    agregarDepartamento(&departamentos);
+                    break;
                 case 7:
                     return 0;
             }
