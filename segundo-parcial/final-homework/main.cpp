@@ -22,11 +22,30 @@ struct Departamento {
 }departamento;
 
 
-void agregarEmpleado(ofstream* archivo){
-    cout << "Ingresa el id del empleado: ";
-    cin >> empleado.id_empleado;
-    *archivo << empleado.id_empleado << "\t";
+void agregarEmpleado(ofstream* archivo, ifstream* db){
+    archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::app);
+    db->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
+    if(archivo->fail() || db->fail()){
+        cout << "Error abriendo el archivo";
+        exit(1);
+    }
 
+    int id;
+
+    
+    while (*db >> empleado.id_empleado){
+        do {
+            cout << "Ingresa el id del empleado: ";
+            cin >> id;
+            if(id == empleado.id_empleado){
+                cout << "Ya existe un usuario con este ID\n";
+            }
+        } while(id == empleado.id_empleado);
+    }
+
+    empleado.id_empleado = id;
+    *archivo << empleado.id_empleado << "\t";
+    
     cout << "Nombre del empleado: ";
     cin >> empleado.nombre_empleado;
     *archivo << empleado.nombre_empleado << "\t";
@@ -240,12 +259,7 @@ int main(){
 
             switch (opt){
                 case 1:
-                    empleados.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::app);
-                    if(empleados.fail()){
-                        cout << "Error abriendo el archivo";
-                        exit(1);
-                    }
-                    agregarEmpleado(&empleados);
+                    agregarEmpleado(&empleados, &empleadosDb);
                     break;
                 case 2:
                     departamentos.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::app);
@@ -267,7 +281,7 @@ int main(){
                     if(departamentosDb.fail()){
                         cout << "Error abriendo el archivo";
                     }
-                    listarEmpleados(&departamentosDb);
+                    listarDepartamentos(&departamentosDb);
                     break;
                  case 5:
                     empleadosDb.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
