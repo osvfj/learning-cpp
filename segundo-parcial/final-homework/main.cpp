@@ -26,13 +26,12 @@ void agregarEmpleado(ofstream* archivo, ifstream* db){
     archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::app);
     db->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
     if(archivo->fail() || db->fail()){
-        cout << "Error abriendo el archivo";
+        cout << "Error abriendo el archivo o no existe...\n";
         exit(1);
     }
 
     int id;
 
-    
     while (*db >> empleado.id_empleado){
         do {
             cout << "Ingresa el id del empleado: ";
@@ -74,6 +73,12 @@ void eliminarEmpleado(ofstream* archivo, ifstream* db) {
     cin >> idAEliminar;
 
 
+    db->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
+    if(db->fail()){
+        cout << "Error abriendo el archivo o no existe...\n";
+        return;
+    }
+
     Empleado* empleados = nullptr; 
     int contador = 0;
     int tamano = 5; 
@@ -114,6 +119,14 @@ void eliminarEmpleado(ofstream* archivo, ifstream* db) {
 
 
 void listarEmpleados(ifstream* archivo) {
+
+
+    archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
+    if(archivo->fail()){
+        cout << "Error abriendo el archivo o no existe...\n";
+        return;
+    }
+
     cout << setw(5) << "ID" 
          << setw(20) << "Empleado" 
          << setw(10) << "Horas trabajadas" 
@@ -154,16 +167,33 @@ void listarEmpleados(ifstream* archivo) {
     archivo->close();
 }
 
+void agregarDepartamento(ofstream* archivo, ifstream* db) {
+    archivo->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::app);
+    db->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
+    if (archivo->fail() || db->fail()) {
+        cout << "Error abriendo el archivo o no existe...\n";
+        exit(1);
+    }
 
-void agregarDepartamento(ofstream* archivo){
-    cout << "Ingresa el id del departamento: ";
-    cin >> departamento.id_departamento;
+    int id;
+    
+    while (*db >> departamento.id_departamento) {
+        do {
+            cout << "Ingresa el id del departamento: ";
+            cin >> id;
+            if (id == departamento.id_departamento) {
+                cout << "Ya existe un departamento con este ID\n";
+            }
+        } while (id == departamento.id_departamento);
+    }
+
+    departamento.id_departamento = id;
     *archivo << departamento.id_departamento << "\t";
 
     cout << "Nombre del departamento: ";
     cin >> departamento.nombreDepartamento;
     *archivo << departamento.nombreDepartamento << "\t";
-    
+
     cout << "Sucursal del departamento: ";
     cin >> departamento.sucursalDepartamento;
     *archivo << departamento.sucursalDepartamento << "\n";
@@ -174,6 +204,13 @@ void agregarDepartamento(ofstream* archivo){
 
 
 void listarDepartamentos(ifstream* archivo) {
+
+    archivo->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
+    if(archivo->fail()){
+        cout << "Error abriendo el archivo o no existe...\n";
+        return;
+    }
+
     cout << setw(5) << "ID" 
          << setw(30) << "Nombre Departamento" 
          << setw(30) << "Sucursal" << endl;
@@ -198,6 +235,13 @@ void eliminarDepartamento(ofstream* archivo, ifstream* db) {
     cout << "Ingresa el id del departamento: ";
     cin >> idAEliminar;
 
+
+    db->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
+    if(db->fail()){
+        cout << "Error abriendo el archivo o no existe...\n";
+        return;
+    }
+
     Departamento* departamentos = nullptr; 
     int contador = 0;
     int tamano = 5; 
@@ -220,6 +264,11 @@ void eliminarDepartamento(ofstream* archivo, ifstream* db) {
     db->close();
 
     archivo->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::out);
+    if(archivo->fail()){
+        cout << "Error abriendo el archivo o no existe...\n";
+        exit(1);
+    }
+
 
     for (int i = 0; i < contador; i++) {
         if (departamentos[i].id_departamento != idAEliminar) {
@@ -262,39 +311,18 @@ int main(){
                     agregarEmpleado(&empleados, &empleadosDb);
                     break;
                 case 2:
-                    departamentos.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::app);
-                    if(departamentos.fail()){
-                        cout << "Error abriendo el archivo";
-                        exit(1);
-                    }
-                    agregarDepartamento(&departamentos);
+                    agregarDepartamento(&departamentos, &departamentosDb);
                     break;
                 case 3:
-                    empleadosDb.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
-                    if(empleadosDb.fail()){
-                        cout << "Error abriendo el archivo";
-                    }
                     listarEmpleados(&empleadosDb);
                     break;
                 case 4:
-                    departamentosDb.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
-                    if(departamentosDb.fail()){
-                        cout << "Error abriendo el archivo";
-                    }
                     listarDepartamentos(&departamentosDb);
                     break;
                  case 5:
-                    empleadosDb.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
-                    if(empleadosDb.fail()){
-                        cout << "Error abriendo el archivo";
-                    }
                     eliminarEmpleado(&empleados, &empleadosDb);
                     break;
                 case 6:
-                    departamentosDb.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
-                    if(departamentosDb.fail()){
-                        cout << "Error abriendo el archivo";
-                    }
                     eliminarDepartamento(&departamentos, &departamentosDb);
                     break;
                 case 7:
