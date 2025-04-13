@@ -5,8 +5,8 @@
 
 using namespace std;
 
-const string NOMBRE_EMPLEADOS_ARCHIVOS = "empleados.txt";
-const string NOMBRE_DEPARTAMENTOS_ARCHIVOS = "departamentos.txt";
+const string NOMBRE_EMPLEADOS_ARCHIVO = "empleados.txt";
+const string NOMBRE_DEPARTAMENTOS_ARCHIVO = "departamentos.txt";
 
 struct Empleado {
     int id_empleado;
@@ -49,11 +49,56 @@ void agregarEmpleado(ofstream* archivo){
 
 
 
+void eliminarEmpleado(ofstream* archivo, ifstream* db) {
+    int idAEliminar;
+    cout << "Ingresa el id del empleado: ";
+    cin >> idAEliminar;
+
+
+    Empleado* empleados = nullptr; 
+    int contador = 0;
+    int tamano = 5; 
+
+    empleados = new Empleado[tamano];
+
+    while (*db >> empleados[contador].id_empleado >> empleados[contador].nombre_empleado >> empleados[contador].horas_trabajadas >> empleados[contador].precio_por_hora) {
+            contador++;
+            if (contador >= tamano) {
+                tamano *= 2; 
+                Empleado* nuevosEmpleados = new Empleado[tamano];
+                for (int i = 0; i < contador; i++) {
+                    nuevosEmpleados[i] = empleados[i]; 
+                }
+                delete[] empleados; 
+                empleados = nuevosEmpleados; 
+            }
+    }
+
+    db->close();
+
+    archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::out);
+
+    for (int i = 0; i < contador; i++) {
+        if (empleados[i].id_empleado != idAEliminar) {
+           *archivo << empleados[i].id_empleado << "\t"
+                     << empleados[i].nombre_empleado << "\t"
+                     << empleados[i].horas_trabajadas << "\t"
+                     << empleados[i].precio_por_hora << "\n";
+        }
+    }
+
+    archivo->close();
+    delete[] empleados; 
+
+    cout << "Empleado eliminado exitosamente." << endl;
+}
+
+
 void listarEmpleados(ifstream* archivo) {
     cout << setw(5) << "ID" 
-         << setw(20) << "Nombre" 
-         << setw(10) << "Horas" 
-         << setw(15) << "Precio/Hora" 
+         << setw(20) << "Empleado" 
+         << setw(10) << "Horas trabajadas" 
+         << setw(15) << "Precio x Hora" 
          << setw(15) << "Sueldo Bruto" 
          << setw(15) << "Seguro Médico" 
          << setw(15) << "Cooperativa" 
@@ -129,6 +174,50 @@ void listarDepartamentos(ifstream* archivo) {
 }
 
 
+void eliminarDepartamento(ofstream* archivo, ifstream* db) {
+    int idAEliminar;
+    cout << "Ingresa el id del departamento: ";
+    cin >> idAEliminar;
+
+    Departamento* departamentos = nullptr; 
+    int contador = 0;
+    int tamano = 5; 
+
+    departamentos = new Departamento[tamano];
+
+    while (*db >> departamentos[contador].id_departamento >> departamentos[contador].nombreDepartamento >> departamentos[contador].sucursalDepartamento) {
+        contador++;
+        if (contador >= tamano) {
+            tamano *= 2; 
+            Departamento* nuevosDepartamentos = new Departamento[tamano];
+            for (int i = 0; i < contador; i++) {
+                nuevosDepartamentos[i] = departamentos[i]; 
+            }
+            delete[] departamentos; 
+            departamentos = nuevosDepartamentos; 
+        }
+    }
+
+    db->close();
+
+    archivo->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::out);
+
+    for (int i = 0; i < contador; i++) {
+        if (departamentos[i].id_departamento != idAEliminar) {
+            *archivo << departamentos[i].id_departamento << "\t"
+                     << departamentos[i].nombreDepartamento << "\t"
+                     << departamentos[i].sucursalDepartamento << "\n";
+        }
+    }
+
+    archivo->close();
+    delete[] departamentos; 
+
+    cout << "Departamento eliminado exitosamente." << endl;
+}
+
+
+
 int main(){
     ofstream empleados;
     ofstream departamentos;
@@ -151,7 +240,7 @@ int main(){
 
             switch (opt){
                 case 1:
-                    empleados.open(NOMBRE_EMPLEADOS_ARCHIVOS, ios::app);
+                    empleados.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::app);
                     if(empleados.fail()){
                         cout << "Error abriendo el archivo";
                         exit(1);
@@ -159,7 +248,7 @@ int main(){
                     agregarEmpleado(&empleados);
                     break;
                 case 2:
-                    departamentos.open(NOMBRE_DEPARTAMENTOS_ARCHIVOS, ios::app);
+                    departamentos.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::app);
                     if(departamentos.fail()){
                         cout << "Error abriendo el archivo";
                         exit(1);
@@ -167,18 +256,32 @@ int main(){
                     agregarDepartamento(&departamentos);
                     break;
                 case 3:
-                    empleadosDb.open(NOMBRE_EMPLEADOS_ARCHIVOS, ios::in);
+                    empleadosDb.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
                     if(empleadosDb.fail()){
                         cout << "Error abriendo el archivo";
                     }
                     listarEmpleados(&empleadosDb);
                     break;
                 case 4:
-                    departamentosDb.open(NOMBRE_DEPARTAMENTOS_ARCHIVOS, ios::in);
+                    departamentosDb.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
                     if(departamentosDb.fail()){
                         cout << "Error abriendo el archivo";
                     }
                     listarEmpleados(&departamentosDb);
+                    break;
+                 case 5:
+                    empleadosDb.open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
+                    if(empleadosDb.fail()){
+                        cout << "Error abriendo el archivo";
+                    }
+                    eliminarEmpleado(&empleados, &empleadosDb);
+                    break;
+                case 6:
+                    departamentosDb.open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
+                    if(departamentosDb.fail()){
+                        cout << "Error abriendo el archivo";
+                    }
+                    eliminarDepartamento(&departamentos, &departamentosDb);
                     break;
                 case 7:
                     return 0;
