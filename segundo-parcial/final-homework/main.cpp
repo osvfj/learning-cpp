@@ -6,8 +6,8 @@
 
 using namespace std;
 
-const string NOMBRE_EMPLEADOS_ARCHIVO = "empleados.txt";
-const string NOMBRE_DEPARTAMENTOS_ARCHIVO = "departamentos.txt";
+const string NOMBRE_EMPLEADOS_ARCHIVO = "EMPLEADOS.txt";
+const string NOMBRE_DEPARTAMENTOS_ARCHIVO = "DEPARTAMENTOS.txt";
 
 struct Empleado {
     int id_empleado;
@@ -224,7 +224,7 @@ void listarEmpleados(ifstream* archivo) {
     float total_sueldo_bruto = 0.0;
     float total_seguro_medico = 0.0;
     float total_cooperativa = 0.0;
-    float total_descuento_acomulado = 0.0;
+    float total_descuento_acumulado = 0.0;
     float total_sueldo_neto = 0.0;
 
     archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
@@ -263,7 +263,7 @@ void listarEmpleados(ifstream* archivo) {
         total_sueldo_bruto += sueldo_bruto;
         total_seguro_medico += seguro_medico;
         total_cooperativa += cooperativa;
-        total_descuento_acomulado += total_descuento;
+        total_descuento_acumulado += total_descuento;
         total_sueldo_neto += sueldo_neto;
 
         cout << setw(5) << empleado.id_empleado 
@@ -285,7 +285,7 @@ void listarEmpleados(ifstream* archivo) {
          << setw(15) << total_sueldo_bruto 
          << setw(15) << total_seguro_medico 
          << setw(15) << total_cooperativa 
-         << setw(18) << total_descuento_acomulado 
+         << setw(18) << total_descuento_acumulado 
          << setw(15) << total_sueldo_neto << endl;
     archivo->close();
     esperarEnter();
