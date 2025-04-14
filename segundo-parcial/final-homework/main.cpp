@@ -123,7 +123,11 @@ void eliminarEmpleado(ofstream* archivo, ifstream* db) {
 
 
 void listarEmpleados(ifstream* archivo) {
-
+    float total_sueldo_bruto = 0.0;
+    float total_seguro_medico = 0.0;
+    float total_cooperativa = 0.0;
+    float total_descuento_acomulado = 0.0;
+    float total_sueldo_neto = 0.0;
 
     archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
     if(archivo->fail()){
@@ -158,6 +162,12 @@ void listarEmpleados(ifstream* archivo) {
         float total_descuento = seguro_medico + cooperativa;
         float sueldo_neto = sueldo_bruto - total_descuento;
 
+        total_sueldo_bruto += sueldo_bruto;
+        total_seguro_medico += seguro_medico;
+        total_cooperativa += cooperativa;
+        total_descuento_acomulado += total_descuento;
+        total_sueldo_neto += sueldo_neto;
+
         cout << setw(5) << empleado.id_empleado 
              << setw(20) << empleado.nombre_empleado 
              << setw(10) << empleado.horas_trabajadas 
@@ -168,6 +178,17 @@ void listarEmpleados(ifstream* archivo) {
              << setw(18) << total_descuento
              << setw(15) << sueldo_neto << endl;
     }
+
+
+    cout << setw(5) << "Total" 
+         << setw(20) << "" 
+         << setw(10) << "" 
+         << setw(15) << "" 
+         << setw(15) << total_sueldo_bruto 
+         << setw(15) << total_seguro_medico 
+         << setw(15) << total_cooperativa 
+         << setw(18) << total_descuento_acomulado 
+         << setw(15) << total_sueldo_neto << endl;
     archivo->close();
 }
 
@@ -340,5 +361,5 @@ int main(){
 
 
 
-        return 0;
+    return 0;
 }
