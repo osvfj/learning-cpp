@@ -25,6 +25,7 @@ struct Departamento {
 
 
 void esperarEnter();
+void limpiarPantalla();
 void agregarEmpleado(ofstream* archivo, ifstream* db);
 void eliminarEmpleado(ofstream* archivo, ifstream* db);
 void listarEmpleados(ifstream* archivo);
@@ -40,7 +41,7 @@ int main(){
     ifstream departamentosDb;
 
     while(true){
-            system("cls");
+            limpiarPantalla();
             cout << "\tTIENDA SRL\n";
             cout << "\tNOMINA DE EMPLEADOS\n\n";
 
@@ -101,6 +102,11 @@ void esperarEnter() {
     cin.get();
 }
 
+
+void limpiarPantalla(){
+    cout << string(50, '\n'); 
+}
+
 void agregarEmpleado(ofstream* archivo, ifstream* db){
     archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::app);
     db->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
@@ -110,19 +116,35 @@ void agregarEmpleado(ofstream* archivo, ifstream* db){
     }
 
     int id;
+    bool idExiste = false;
 
-    if (*db >> empleado.id_empleado){
-        do {
-            cout << "Ingresa el id del empleado: ";
-            cin >> id;
-            if(id == empleado.id_empleado){
-                cout << "Ya existe un usuario con este ID\n";
+    Empleado* empleados = nullptr;
+    int numEmpleados = 0;
+    while (*db >> empleado.id_empleado >> empleado.nombre_empleado >> empleado.horas_trabajadas >> empleado.precio_por_hora) {
+        if (numEmpleados == 0) {
+            empleados = new Empleado[1];
+        } else {
+            Empleado* temp = new Empleado[numEmpleados + 1];
+            for (int i = 0; i < numEmpleados; i++) {
+                temp[i] = empleados[i];
             }
-        } while(id == empleado.id_empleado);
-    } else {
+            delete[] empleados;
+            empleados = temp;
+        }
+        empleados[numEmpleados++] = empleado;
+    }
+
+    do {
         cout << "Ingresa el id del empleado: ";
         cin >> id;
-    }
+        for (int i = 0; i < numEmpleados; i++) {
+            if (empleados[i].id_empleado == id) {
+                cout << "Ya existe un usuario con este ID\n";
+                idExiste = true;
+                break;
+            }
+        }
+    } while (idExiste);
 
     empleado.id_empleado = id;
     *archivo << empleado.id_empleado << "\t";
@@ -290,7 +312,6 @@ void listarEmpleados(ifstream* archivo) {
     archivo->close();
     esperarEnter();
 }
-
 void agregarDepartamento(ofstream* archivo, ifstream* db) {
     archivo->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::app);
     db->open(NOMBRE_DEPARTAMENTOS_ARCHIVO, ios::in);
@@ -300,19 +321,35 @@ void agregarDepartamento(ofstream* archivo, ifstream* db) {
     }
 
     int id;
-    
-   if (*db >> departamento.id_departamento) {
-        do {
-            cout << "Ingresa el id del departamento: ";
-            cin >> id;
-            if (id == departamento.id_departamento) {
-                cout << "Ya existe un departamento con este ID\n";
+    bool idExiste = false;
+
+    Departamento* departamentos = nullptr;
+    int numDepartamentos = 0;
+    while (*db >> departamento.id_departamento >> departamento.nombreDepartamento >> departamento.sucursalDepartamento) {
+        if (numDepartamentos == 0) {
+            departamentos = new Departamento[1];
+        } else {
+            Departamento* temp = new Departamento[numDepartamentos + 1];
+            for (int i = 0; i < numDepartamentos; i++) {
+                temp[i] = departamentos[i];
             }
-        } while (id == departamento.id_departamento);
-    } else {
+            delete[] departamentos;
+            departamentos = temp;
+        }
+        departamentos[numDepartamentos++] = departamento;
+    }
+
+    do {
         cout << "Ingresa el id del departamento: ";
         cin >> id;
-    }
+        for (int i = 0; i < numDepartamentos; i++) {
+            if (departamentos[i].id_departamento == id) {
+                cout << "Ya existe un departamento con este ID\n";
+                idExiste = true;
+                break;
+            }
+        }
+    } while (idExiste);
 
     departamento.id_departamento = id;
     *archivo << departamento.id_departamento << "\t";
@@ -343,6 +380,8 @@ void agregarDepartamento(ofstream* archivo, ifstream* db) {
 
     archivo->close();
     db->close();
+
+    delete[] departamentos;
 }
 
 
