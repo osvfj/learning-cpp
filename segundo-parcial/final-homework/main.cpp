@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <iomanip> 
+#include <cstring>
 
 using namespace std;
 
@@ -40,6 +41,10 @@ int main(){
 
     while(true){
             system("cls");
+            cout << "\tTIENDA SRL\n";
+            cout << "\tNOMINA DE EMPLEADOS\n\n";
+
+
             int opt;
             cout << "-------------------------------------------------";
             cout << "\n1. Añadir empleado\n";
@@ -122,10 +127,18 @@ void agregarEmpleado(ofstream* archivo, ifstream* db){
     empleado.id_empleado = id;
     *archivo << empleado.id_empleado << "\t";
     
-    cout << "Nombre del empleado: ";
-    cin >> empleado.nombre_empleado;
-    *archivo << empleado.nombre_empleado << "\t";
+     do {
+        cout << "Nombre del empleado (sin espacios): ";
+        cin.ignore(); 
+        cin.getline(empleado.nombre_empleado, sizeof(empleado.nombre_empleado));
 
+        if (strchr(empleado.nombre_empleado, ' ')) {
+            cout << "El nombre no debe contener espacios. Inténtalo de nuevo.\n";
+        }
+    } while (strchr(empleado.nombre_empleado, ' '));
+
+    *archivo << empleado.nombre_empleado << "\t";
+    
     do {
         cout << "Horas trabajadas: ";
         cin >> empleado.horas_trabajadas;
@@ -304,12 +317,28 @@ void agregarDepartamento(ofstream* archivo, ifstream* db) {
     departamento.id_departamento = id;
     *archivo << departamento.id_departamento << "\t";
 
-    cout << "Nombre del departamento: ";
-    cin >> departamento.nombreDepartamento;
+    do {
+        cout << "Nombre del departamento (sin espacios): ";
+        cin.ignore(); 
+        cin.getline(departamento.nombreDepartamento, sizeof(departamento.nombreDepartamento));
+
+        if (strchr(departamento.nombreDepartamento, ' ')) {
+            cout << "El nombre del departamento no debe contener espacios. Inténtalo de nuevo.\n";
+        }
+    } while (strchr(departamento.nombreDepartamento, ' '));
+
     *archivo << departamento.nombreDepartamento << "\t";
 
-    cout << "Sucursal del departamento: ";
-    cin >> departamento.sucursalDepartamento;
+    do {
+        cout << "Sucursal del departamento (sin espacios): ";
+        cin.ignore(); 
+        cin.getline(departamento.sucursalDepartamento, sizeof(departamento.sucursalDepartamento));
+
+        if (strchr(departamento.sucursalDepartamento, ' ')) {
+            cout << "La sucursal del departamento no debe contener espacios. Inténtalo de nuevo.\n";
+        }
+    } while (strchr(departamento.sucursalDepartamento, ' '));
+
     *archivo << departamento.sucursalDepartamento << "\n";
 
     archivo->close();
