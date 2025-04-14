@@ -106,19 +106,28 @@ void eliminarEmpleado(ofstream* archivo, ifstream* db) {
 
     archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::out);
 
+    bool encontrado = false;
+
     for (int i = 0; i < contador; i++) {
-        if (empleados[i].id_empleado != idAEliminar) {
-           *archivo << empleados[i].id_empleado << "\t"
+        if (empleados[i].id_empleado == idAEliminar) {
+            encontrado = true;
+            continue;
+        }
+
+         *archivo << empleados[i].id_empleado << "\t"
                      << empleados[i].nombre_empleado << "\t"
                      << empleados[i].horas_trabajadas << "\t"
                      << empleados[i].precio_por_hora << "\n";
-        }
     }
 
     archivo->close();
     delete[] empleados; 
 
-    cout << "Empleado eliminado exitosamente." << endl;
+    if(encontrado){
+          cout << "Empleado eliminado exitosamente." << endl;
+    } else {
+        cout << "No existe empleado con el ID especificado" << endl;
+    }
 }
 
 
@@ -298,19 +307,31 @@ void eliminarDepartamento(ofstream* archivo, ifstream* db) {
         exit(1);
     }
 
+    bool encontrado = false;
 
     for (int i = 0; i < contador; i++) {
-        if (departamentos[i].id_departamento != idAEliminar) {
-            *archivo << departamentos[i].id_departamento << "\t"
+        if (departamentos[i].id_departamento == idAEliminar) {
+            encontrado = true;
+            continue;
+        } 
+
+
+         *archivo << departamentos[i].id_departamento << "\t"
                      << departamentos[i].nombreDepartamento << "\t"
                      << departamentos[i].sucursalDepartamento << "\n";
-        }
     }
 
     archivo->close();
     delete[] departamentos; 
 
     cout << "Departamento eliminado exitosamente." << endl;
+
+    if (encontrado) {
+        cout << "Departamento eliminado exitosamente." << endl;
+    } else {
+        cout << "No existe un departamento con el ID especificado." << endl;
+    }
+
 }
 
 
