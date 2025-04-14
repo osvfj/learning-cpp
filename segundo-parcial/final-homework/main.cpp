@@ -22,6 +22,80 @@ struct Departamento {
 }departamento;
 
 
+
+void esperarEnter();
+void agregarEmpleado(ofstream* archivo, ifstream* db);
+void eliminarEmpleado(ofstream* archivo, ifstream* db);
+void listarEmpleados(ifstream* archivo);
+void agregarDepartamento(ofstream* archivo, ifstream* db);
+void listarDepartamentos(ifstream* archivo);
+void eliminarDepartamento(ofstream* archivo, ifstream* db);
+
+
+int main(){
+    ofstream empleados;
+    ofstream departamentos;
+    ifstream empleadosDb;
+    ifstream departamentosDb;
+
+    while(true){
+            system("cls");
+            int opt;
+            cout << "-------------------------------------------------";
+            cout << "\n1. Añadir empleado\n";
+            cout << "2. Añadir departamento\n";
+            cout << "3. Listar empleados\n";
+            cout << "4. Listar departamentos\n";
+            cout << "5. Eliminar empleado\n";
+            cout << "6. Eliminar departamento\n";
+            cout << "7. Salir\n";
+            cout << "-------------------------------------------------\n";
+            cout << "Opt: ";
+            cin >> opt;
+
+            switch (opt){
+                case 1:
+                    agregarEmpleado(&empleados, &empleadosDb);
+                    break;
+                case 2:
+                    agregarDepartamento(&departamentos, &departamentosDb);
+                    break;
+                case 3:
+                    listarEmpleados(&empleadosDb);
+                    break;
+                case 4:
+                    listarDepartamentos(&departamentosDb);
+                    break;
+                 case 5:
+                    eliminarEmpleado(&empleados, &empleadosDb);
+                    break;
+                case 6:
+                    eliminarDepartamento(&departamentos, &departamentosDb);
+                    break;
+                case 7:
+                    return 0;
+            }
+        }
+
+
+
+    return 0;
+}
+
+
+
+
+
+
+/* 
+    "Simulación de getch", debido a que mi compilador no tiene la cabecera conio.h
+*/
+void esperarEnter() {
+    cout << "\nPresiona Enter para continuar...";
+    cin.ignore(); 
+    cin.get();
+}
+
 void agregarEmpleado(ofstream* archivo, ifstream* db){
     archivo->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::app);
     db->open(NOMBRE_EMPLEADOS_ARCHIVO, ios::in);
@@ -128,6 +202,8 @@ void eliminarEmpleado(ofstream* archivo, ifstream* db) {
     } else {
         cout << "No existe empleado con el ID especificado" << endl;
     }
+
+    esperarEnter();
 }
 
 
@@ -199,6 +275,7 @@ void listarEmpleados(ifstream* archivo) {
          << setw(18) << total_descuento_acomulado 
          << setw(15) << total_sueldo_neto << endl;
     archivo->close();
+    esperarEnter();
 }
 
 void agregarDepartamento(ofstream* archivo, ifstream* db) {
@@ -265,6 +342,7 @@ void listarDepartamentos(ifstream* archivo) {
              << setw(30) << departamento.sucursalDepartamento << endl;
     }
     archivo->close();
+    esperarEnter();
 }
 
 
@@ -332,55 +410,6 @@ void eliminarDepartamento(ofstream* archivo, ifstream* db) {
         cout << "No existe un departamento con el ID especificado." << endl;
     }
 
-}
+    esperarEnter();
 
-
-
-int main(){
-    ofstream empleados;
-    ofstream departamentos;
-    ifstream empleadosDb;
-    ifstream departamentosDb;
-
-    while(true){
-            int opt;
-            cout << "-------------------------------------------------";
-            cout << "\n1. Añadir empleado\n";
-            cout << "2. Añadir departamento\n";
-            cout << "3. Listar empleados\n";
-            cout << "4. Listar departamentos\n";
-            cout << "5. Eliminar empleado\n";
-            cout << "6. Eliminar departamento\n";
-            cout << "7. Salir\n";
-            cout << "-------------------------------------------------\n";
-            cout << "Opt: ";
-            cin >> opt;
-
-            switch (opt){
-                case 1:
-                    agregarEmpleado(&empleados, &empleadosDb);
-                    break;
-                case 2:
-                    agregarDepartamento(&departamentos, &departamentosDb);
-                    break;
-                case 3:
-                    listarEmpleados(&empleadosDb);
-                    break;
-                case 4:
-                    listarDepartamentos(&departamentosDb);
-                    break;
-                 case 5:
-                    eliminarEmpleado(&empleados, &empleadosDb);
-                    break;
-                case 6:
-                    eliminarDepartamento(&departamentos, &departamentosDb);
-                    break;
-                case 7:
-                    return 0;
-            }
-        }
-
-
-
-    return 0;
 }
