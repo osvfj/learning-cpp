@@ -21,8 +21,30 @@ int main(){
     char bot_1[palabra_adivinar.length()];
     char bot_2[palabra_adivinar.length()];
 
-    int random = rand()  % 27;
+    char letra_generada;
 
-    cout << abecedario[random] << endl;
+    for (int i = 0; i < palabra_adivinar.length(); ++i) {
+        bot_1[i] = '_';
+    }
+
+
+    int j = 0;
+    while(j < 1000){
+        letra_generada = abecedario[rand()  % 26];
+        for(int i = 0; i < palabra_adivinar.length(); ++i){
+            if(letra_generada == palabra_adivinar[i]){
+                bot_1[i] = letra_generada;
+                cout << letra_generada << endl;
+            }
+        } 
+        j++;
+    }
+
+    cout << "---------------------------" << endl;
+
+    for(int i = 0; i < palabra_adivinar.length(); ++i){
+        cout << bot_1[i];
+    }
+    cout << endl;
     return 0;
 }
