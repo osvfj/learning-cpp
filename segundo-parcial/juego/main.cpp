@@ -3,11 +3,11 @@
 #include <cstdlib>
 #include <ctime>
 #include <cctype>
+#include <iomanip>
 
 using namespace std;
 
 int main(){
-
     string palabra_adivinar;
     char abecedario[27];
     srand(time(0));
@@ -38,6 +38,7 @@ int main(){
         letra_generada = abecedario[rand()  % 27];
         bool letra_encontrada = false;
 
+
         for(int i = 0; i < palabra_adivinar.length(); ++i){
             if(letra_generada == tolower(palabra_adivinar[i])){
                 letra_encontrada = true;
@@ -51,6 +52,8 @@ int main(){
 
         if (letra_encontrada) {
             cout << "Bot " << (bot_1_jugando ? "1" : "2") << ": " << letra_generada << endl;
+            cout << "Presiona Enter..." << endl;
+            cin.get();
             bot_1_jugando = !bot_1_jugando; 
         }
 
@@ -65,6 +68,18 @@ int main(){
             }
         }
 
+
+        cout << string(50, '\n');
+
+        cout << "+--------------+--------------+" << endl;
+        cout << "| Bot 1        | Bot 2        |" << endl;
+        cout << "+--------------+--------------+" << endl;
+        for (int i = 0; i < palabra_adivinar.length(); ++i) {
+            cout << "| " << std::setw(12) << bot_1[i] << " | " << std::setw(12) << bot_2[i] << " |" << endl;
+        }
+        cout << "+--------------+--------------+" << endl;
+
+
         if (bot1_gano || bot2_gano) {
             fin_juego = true;
             if (bot1_gano && bot2_gano) {
@@ -75,6 +90,7 @@ int main(){
                 cout << "¡Bot 2 ha adivinado la palabra y gana!" << endl;
             }
         }
+
     }
 
     return 0;
