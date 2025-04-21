@@ -8,12 +8,14 @@ using namespace std;
 int main(){
 
     string palabra_adivinar;
-    char abecedario[26];
+    char abecedario[27];
     srand(time(0));
 
     for (int i = 0; i < 26; ++i) {
         abecedario[i] = 'a' + i;
     }
+
+    abecedario[26] = ' ';
 
     cout << "Ingresa la palabra a adivinar: ";
     getline(cin, palabra_adivinar);
@@ -32,7 +34,7 @@ int main(){
     }
 
     while(!fin_juego){
-        letra_generada = abecedario[rand()  % 26];
+        letra_generada = abecedario[rand()  % 27];
         bool letra_encontrada = false;
 
         for(int i = 0; i < palabra_adivinar.length(); ++i){
