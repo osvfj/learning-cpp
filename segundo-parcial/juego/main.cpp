@@ -47,6 +47,12 @@ int main(){
                 }
             }
         } 
+
+        
+        if (letra_encontrada) {
+            cout << "Bot " << (bot_1_jugando ? "1" : "2") << ": " << letra_generada << endl;
+            bot_1_jugando = !bot_1_jugando; 
+        }
     }
 
     return 0;
