@@ -48,10 +48,31 @@ int main(){
             }
         } 
 
-        
         if (letra_encontrada) {
             cout << "Bot " << (bot_1_jugando ? "1" : "2") << ": " << letra_generada << endl;
             bot_1_jugando = !bot_1_jugando; 
+        }
+
+        bool bot1_gano = true;
+        bool bot2_gano = true;
+        for (int i = 0; i < palabra_adivinar.length(); ++i) {
+            if (bot_1[i] != palabra_adivinar[i]) {
+                bot1_gano = false;
+            }
+            if (bot_2[i] != palabra_adivinar[i]) {
+                bot2_gano = false;
+            }
+        }
+
+        if (bot1_gano || bot2_gano) {
+            fin_juego = true;
+            if (bot1_gano && bot2_gano) {
+                cout << "¡Empate! Ambos bots ganaron." << endl;
+            } else if (bot1_gano) {
+                cout << "¡Bot 1 ha adivinado la palabra y gana!" << endl;
+            } else {
+                cout << "¡Bot 2 ha adivinado la palabra y gana!" << endl;
+            }
         }
     }
 
