@@ -2,6 +2,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <cctype>
 
 using namespace std;
 
@@ -38,7 +39,7 @@ int main(){
         bool letra_encontrada = false;
 
         for(int i = 0; i < palabra_adivinar.length(); ++i){
-            if(letra_generada == palabra_adivinar[i]){
+            if(letra_generada == tolower(palabra_adivinar[i])){
                 letra_encontrada = true;
                 if(bot_1_jugando){
                     bot_1[i] = letra_generada;
@@ -56,10 +57,10 @@ int main(){
         bool bot1_gano = true;
         bool bot2_gano = true;
         for (int i = 0; i < palabra_adivinar.length(); ++i) {
-            if (bot_1[i] != palabra_adivinar[i]) {
+            if (bot_1[i] != tolower(palabra_adivinar[i])) {
                 bot1_gano = false;
             }
-            if (bot_2[i] != palabra_adivinar[i]) {
+            if (bot_2[i] != tolower(palabra_adivinar[i])) {
                 bot2_gano = false;
             }
         }
