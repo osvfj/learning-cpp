@@ -18,6 +18,9 @@ int main(){
     cout << "Ingresa la palabra a adivinar: ";
     getline(cin, palabra_adivinar);
 
+    bool bot_1_jugando = true; 
+    bool fin_juego = false;
+
     char bot_1[palabra_adivinar.length()];
     char bot_2[palabra_adivinar.length()];
 
@@ -25,26 +28,24 @@ int main(){
 
     for (int i = 0; i < palabra_adivinar.length(); ++i) {
         bot_1[i] = '_';
+        bot_2[i] = '_';
     }
 
-
-    int j = 0;
-    while(j < 1000){
+    while(!fin_juego){
         letra_generada = abecedario[rand()  % 26];
+        bool letra_encontrada = false;
+
         for(int i = 0; i < palabra_adivinar.length(); ++i){
             if(letra_generada == palabra_adivinar[i]){
-                bot_1[i] = letra_generada;
-                cout << letra_generada << endl;
+                letra_encontrada = true;
+                if(bot_1_jugando){
+                    bot_1[i] = letra_generada;
+                } else {
+                    bot_2[i] = letra_generada;
+                }
             }
         } 
-        j++;
     }
 
-    cout << "---------------------------" << endl;
-
-    for(int i = 0; i < palabra_adivinar.length(); ++i){
-        cout << bot_1[i];
-    }
-    cout << endl;
     return 0;
 }
